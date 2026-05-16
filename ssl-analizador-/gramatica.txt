@@ -1,0 +1,48 @@
+GRAMÁTICA — Lógica Proposicional (Tema 25914_15)
+Notación EBNF
+
+formula       = implication ;
+
+implication   = disjunction [ "->" implication ] ;
+
+disjunction   = conjunction { "v" conjunction } ;
+
+conjunction   = negation { "A" negation } ;
+
+negation      = "-" negation
+              | primary ;
+
+primary       = variable
+              | "(" formula ")" ;
+
+variable      = letter { variable_char } ;
+
+variable_char = letter | digit ;
+
+letter        = "A" | "B" | ... | "Z" | "a" | "b" | ... | "z" ;
+
+digit         = "0" | "1" | ... | "9" ;
+
+operator      = "->" | "v" | "A" ;
+
+unary_op      = "-" ;
+
+paren         = "(" | ")" ;
+
+PRECEDENCIA (menor a mayor)
+1. ->   Implicación         (asociativa a la derecha)
+2. v    Disyunción          (asociativa a la izquierda)
+3. A    Conjunción          (asociativa a la izquierda)
+4. -    Negación (unario)   (mayor precedencia)
+
+
+CONFLICTOS Y RESOLUCIONES
+
+• 'A' sola  - siempre CONJUNCTION (no variable).
+Variables que comiencen con A deben tener ≥ 2 chars
+(ej: Ab, A1, Ap).
+• 'v' sola  - siempre DISJUNCTION (no variable).
+Variables que comiencen con v deben tener ≥ 2 chars
+(ej: v1, var, vx).
+• '->' vs '-': se aplica "longest match"; si el char 
+siguiente a '-' es '>', se reconoce IMPLICATION.
